@@ -36,7 +36,7 @@ function App() {
   }, [page]);
 
   return (
-    <div className="container">
+    <>
       <Routes>
         <Route
           path="/"
@@ -50,7 +50,7 @@ function App() {
         />
         <Route path="/:id" element={<MovieDetail data={movies} />} />
       </Routes>
-    </div>
+    </>
   );
 }
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./MovieDetail.module.css";
 
 function MovieDetail({ data }) {
   const { id } = useParams();
   //   const contentRef = useRef(null);
 
   useEffect(() => {
+    console.log("go to top");
     window.scrollTo(0, 0);
   }, []);
 
@@ -29,12 +31,13 @@ function MovieDetail({ data }) {
   const formattedReleaseDate = convertDate(release_date);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3 style={{ textAlign: "center" }}>{original_title}</h3>
       <div style={{ textAlign: "center" }}>
         <img
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
           alt={`${original_title} poster`}
+          className={styles.poster}
         />
       </div>
 
