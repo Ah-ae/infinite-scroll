@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MovieList from "./components/MovieList";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -10,21 +10,12 @@ function App() {
 
   const fetchNextData = () => {
     if (!hasNoMoreResult) {
-      setIsLoading(true);
       setPage((page) => page + 1);
+      setIsLoading(true);
     }
   };
 
   useEffect(() => {
-    // (async () => {
-    //   const { results } = await (
-    //     await fetch(
-    //       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
-    //     )
-    //   ).json();
-    //   setMovies([...movies, ...results]);
-    // })();
-
     const fetchNextPage = async () => {
       const scrollY = window.scrollY;
 

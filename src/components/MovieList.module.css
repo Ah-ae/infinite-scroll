@@ -1,0 +1,18 @@
+.container {
+  padding: 20px;
+  background-color: rgb(246, 242, 242);
+  box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+.movieListGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.loadingIndicatorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* 로딩 인디케이터의 높이에 맞게 조정 */
+}

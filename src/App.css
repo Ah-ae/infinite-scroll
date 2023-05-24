@@ -1,8 +1,8 @@
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 20px;
-  gap: 20px;
-  background-color: rgb(246, 242, 242);
-  box-shadow: 10px 20px 30px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 520px;
+  width: 100%;
 }

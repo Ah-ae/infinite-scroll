@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import MovieCard from "./MovieCard";
+import LoadingIndicator from "./LoadingIndicator";
+import styles from "./MovieList.module.css";
 
 function MovieList({ data, isLoading, fetchNextData }) {
   const handleScroll = () => {
@@ -7,26 +9,29 @@ function MovieList({ data, isLoading, fetchNextData }) {
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
 
-    // 화면 하단까지 스크롤되었고, !isLoading 이어서 요청 중이 아니라면 다음 페이지 정보 요청
-    if (scrollTop + clientHeight >= scrollHeight && !isLoading) {
-      fetchNextData();
-    }
+    // * 첫번째로 했을 때는 더이상 로딩 안되는데 두번째로 하면 로딩 더 됨
+    // const isScrollEnd =
+    //   window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    const isScrollEnd = scrollTop + clientHeight >= scrollHeight;
+
+    // 화면 하단까지 스크롤되었고, !isLoading 이어서 현재 요청 중이 아니라면 다음 페이지 정보 요청
+    if (isScrollEnd && !isLoading) fetchNextData();
   };
 
-  const throttle = (func, waits) => {
-    let lastFunc; // timer id of last invocation
-    let lastRan; // time stamp eof last invocation
+  const throttle = (callback, waits) => {
+    let lastCallback; // timer id of last invocation
+    let lastRan; // time stamp of last invocation
 
     return (...args) => {
       const context = this;
       if (!lastRan) {
-        func.apply(context, args);
+        callback.apply(context, args);
         lastRan = Date.now();
       } else {
-        clearTimeout(lastFunc);
-        lastFunc = setTimeout(() => {
+        clearTimeout(lastCallback);
+        lastCallback = setTimeout(() => {
           if (Date.now() - lastRan >= waits) {
-            func.apply(context, args);
+            callback.apply(context, args);
             lastRan = Date.now();
           }
         }, waits - (Date.now() - lastRan));
@@ -35,11 +40,12 @@ function MovieList({ data, isLoading, fetchNextData }) {
   };
 
   useEffect(() => {
-    // const clientWidth = document.documentElement.clientWidth;
     const clientHeight = document.documentElement.clientHeight;
+    const MOVIE_CARD_HEIGHT = 440;
+    const GRID_GAP_HEIGHT = 20;
 
     // 클라이언트 화면이 영화 카드 20개(10 rows) 이상 들어가고도 남는 경우, 정보를 한 번 더 요청해서 화면을 채우도록 함
-    if (clientHeight > (440 + 20) * 10) {
+    if (clientHeight > (MOVIE_CARD_HEIGHT + GRID_GAP_HEIGHT) * 10) {
       fetchNextData();
     }
 
@@ -50,19 +56,26 @@ function MovieList({ data, isLoading, fetchNextData }) {
     return () => {
       window.removeEventListener("scroll", throttle(handleScroll, 500));
     };
-  }, []);
+  }, [fetchNextData]);
 
   return (
-    <>
-      {data &&
-        data.map((movie) => (
-          <MovieCard
-            title={movie.title}
-            posterPath={movie.poster_path}
-            key={movie.id}
-          />
-        ))}
-    </>
+    <div className={styles.container}>
+      <div className={styles.movieListGrid}>
+        {data &&
+          data.map((movie) => (
+            <MovieCard
+              title={movie.title}
+              posterPath={movie.poster_path}
+              key={movie.id}
+            />
+          ))}
+      </div>
+      {isLoading && (
+        <div className={styles.loadingIndicatorContainer}>
+          <LoadingIndicator />
+        </div>
+      )}
+    </div>
   );
 }
 
