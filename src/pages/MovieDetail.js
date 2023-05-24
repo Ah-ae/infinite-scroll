@@ -1,23 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./MovieDetail.module.css";
 
 function MovieDetail({ data }) {
   const { id } = useParams();
-  //   const contentRef = useRef(null);
 
   useEffect(() => {
-    console.log("go to top");
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
-  //   useEffect(() => {
-  //     contentRef.current.scrollIntoView({ behavior: "auto", block: "start" });
-  //   }, []);
-
-  // typeof movie.id : number
-  // typeof id : string
-  const movie = data.filter((movie) => movie.id == id);
+  const movie = data.filter((movie) => movie.id === Number(id));
 
   const { original_title, overview, poster_path, release_date, vote_average } =
     movie[0];

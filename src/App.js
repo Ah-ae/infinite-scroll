@@ -36,21 +36,19 @@ function App() {
   }, [page]);
 
   return (
-    <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <MovieList
-              data={movies}
-              isLoading={isLoading}
-              fetchNextData={fetchNextData}
-            />
-          }
-        />
-        <Route path="/:id" element={<MovieDetail data={movies} />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <MovieList
+            data={movies}
+            isLoading={isLoading}
+            fetchNextData={fetchNextData}
+          />
+        }
+      />
+      <Route path="/:id" element={<MovieDetail data={movies} />} />
+    </Routes>
   );
 }
 
