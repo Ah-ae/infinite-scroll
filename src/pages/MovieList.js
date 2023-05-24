@@ -1,14 +1,12 @@
 import { useEffect } from "react";
-import MovieCard from "../components/MovieCard";
-import LoadingIndicator from "../components/LoadingIndicator";
+import MovieCard from "../components/ui/MovieCard";
+import LoadingIndicator from "../components/ui/LoadingIndicator";
 import styles from "./MovieList.module.css";
 import { Link } from "react-router-dom";
 
 function MovieList({ data, isLoading, fetchNextData }) {
   const handleScroll = () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
+    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
     // * 첫번째로 했을 때는 더이상 로딩 안되는데 두번째로 하면 로딩 더 됨
     // const isScrollEnd =
