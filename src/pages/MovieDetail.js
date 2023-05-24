@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 function MovieDetail({ data }) {
   const { id } = useParams();
+  //   const contentRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  //   useEffect(() => {
+  //     contentRef.current.scrollIntoView({ behavior: "auto", block: "start" });
+  //   }, []);
 
   // typeof movie.id : number
   // typeof id : string
@@ -21,11 +30,14 @@ function MovieDetail({ data }) {
 
   return (
     <div>
-      <h3>{original_title}</h3>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-        alt={`${original_title} poster`}
-      />
+      <h3 style={{ textAlign: "center" }}>{original_title}</h3>
+      <div style={{ textAlign: "center" }}>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          alt={`${original_title} poster`}
+        />
+      </div>
+
       <ul>
         <li>
           <p>Release Date: {formattedReleaseDate}</p>
