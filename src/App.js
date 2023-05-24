@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import MovieList from "./components/MovieList";
+import { Routes, Route } from "react-router-dom";
+import MovieList from "./pages/MovieList";
+import MovieDetail from "./pages/MovieDetail";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -35,11 +37,19 @@ function App() {
 
   return (
     <div className="container">
-      <MovieList
-        data={movies}
-        isLoading={isLoading}
-        fetchNextData={fetchNextData}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MovieList
+              data={movies}
+              isLoading={isLoading}
+              fetchNextData={fetchNextData}
+            />
+          }
+        />
+        <Route path="/:id" element={<MovieDetail data={movies} />} />
+      </Routes>
     </div>
   );
 }

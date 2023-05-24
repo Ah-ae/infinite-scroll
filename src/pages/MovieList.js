@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import MovieCard from "./MovieCard";
-import LoadingIndicator from "./LoadingIndicator";
+import MovieCard from "../components/MovieCard";
+import LoadingIndicator from "../components/LoadingIndicator";
 import styles from "./MovieList.module.css";
+import { Link } from "react-router-dom";
 
 function MovieList({ data, isLoading, fetchNextData }) {
   const handleScroll = () => {
@@ -63,11 +64,13 @@ function MovieList({ data, isLoading, fetchNextData }) {
       <div className={styles.movieListGrid}>
         {data &&
           data.map((movie) => (
-            <MovieCard
-              title={movie.title}
-              posterPath={movie.poster_path}
-              key={movie.id}
-            />
+            <Link to={`/${movie.id}`}>
+              <MovieCard
+                key={movie.id}
+                title={movie.title}
+                posterPath={movie.poster_path}
+              />
+            </Link>
           ))}
       </div>
       {isLoading && (
