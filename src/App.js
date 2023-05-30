@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,15 +17,27 @@ function App() {
         )
       ).json();
       setMovies((movies) => [...movies, ...results]);
+      setIsLoading(false);
     };
     fetchData();
   }, [page]);
+
+  const loadMoreData = () => {
+    setPage((prev) => prev + 1);
+    setIsLoading(true);
+  };
 
   return (
     <Routes>
       <Route
         path="/"
-        element={<MovieList movies={movies} setPage={setPage} />}
+        element={
+          <MovieList
+            movies={movies}
+            loadMoreData={loadMoreData}
+            loading={isLoading}
+          />
+        }
       />
       <Route path="/:id" element={<MovieDetail data={movies} />} />
     </Routes>

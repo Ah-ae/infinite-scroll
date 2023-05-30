@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import MovieCard from "../components/ui/MovieCard";
-import styles from "./MovieList.module.css";
 import { Link } from "react-router-dom";
+import MovieCard from "../components/ui/MovieCard";
+import LoadingIndicator from "react-bootstrap/esm/Spinner";
+import styles from "./MovieList.module.css";
 
-function MovieList({ movies, setPage }) {
+function MovieList({ movies, loadMoreData, loading }) {
   const target = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setPage((prev) => prev + 1);
-      }
+      if (entries[0].isIntersecting) loadMoreData();
     });
 
     if (target.current) observer.observe(target.current);
@@ -33,6 +32,11 @@ function MovieList({ movies, setPage }) {
           ))}
         {movies.length > 0 && <div ref={target} />}
       </div>
+      {loading && (
+        <div className={styles.loadingIndicatorContainer}>
+          <LoadingIndicator />
+        </div>
+      )}
     </div>
   );
 }
